@@ -98,6 +98,11 @@ conda env create -f environment.yml
 ```
 
 ###2. Run the Main Script:
+
+After downloading dataset and finetuned model :
+```bash
+dataset_preparation.ipynb 
+```
    
 Execute the main script:
 ```bash
