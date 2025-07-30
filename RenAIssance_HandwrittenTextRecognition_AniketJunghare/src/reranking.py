@@ -6,8 +6,8 @@ from transformers import CLIPProcessor, CLIPModel
 import ast
 
 # ==== Configuration ====
-csv_path = "/home/aniketj/soc/test/trocr_predictions_final.csv"
-image_folder = "/home/aniketj/soc/CODE/test"
+csv_path = "output/trocr_predictions_final.csv"
+image_folder = "Working_dataset/test"
 clip_model_name = "openai/clip-vit-base-patch32"
 alpha = 0.5
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
