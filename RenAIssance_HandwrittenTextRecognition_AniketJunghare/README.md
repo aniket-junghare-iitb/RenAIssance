@@ -61,6 +61,20 @@ mBART is used as a post-correction module to fix transcription-level issues like
 ````
 
 ---
+
+##  **Results**
+
+![Alt Text](output/result1.png)
+![Alt Text](output/result2.png)
+![Alt Text](output/result3.png)
+![Alt Text](output/result4.png)
+![Alt Text](output/result5.png)
+![Alt Text](output/result6.png)
+
+
+---
+
+---
 ## Implementation Guide**
 
 ### **1. Create environment**
