@@ -61,7 +61,28 @@ mBART is used as a post-correction module to fix transcription-level issues like
 ````
 
 ---
+## Implementation Guide**
 
+### **1. Create environment**
+
+```bash
+conda env create -f environment.yml
+```
+
+###2. Run the Main Script:
+   
+Execute the main script:
+```bash
+python trocr_finetune.py 
+```
+
+```bash
+python evaluate.py 
+```
+
+```bash
+python reranking.py 
+```
   
 
 ---
