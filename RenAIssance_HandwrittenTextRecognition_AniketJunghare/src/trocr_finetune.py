@@ -66,13 +66,13 @@ model.to(device)
 
 # Datasets and loaders
 train_dataset = HandwritingDataset(
-    image_dir="/home/aniketj/soc/CODE/train",
-    transcription_dir="/home/aniketj/soc/CODE/train_transcriptions",
+    image_dir="Working_dataset/train",
+    transcription_dir="Working_dataset/train_transcriptions",
     processor=processor
 )
 val_dataset = HandwritingDataset(
-    image_dir="/home/aniketj/soc/CODE/validation",
-    transcription_dir="/home/aniketj/soc/CODE/validation_transcriptions",
+    image_dir="Working_dataset/validation",
+    transcription_dir="Working_dataset/validation_transcriptions",
     processor=processor
 )
 train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
@@ -153,10 +153,10 @@ for epoch in range(num_epochs):
     # Save best model
     if val_cer < best_cer:
         best_cer = val_cer
-        model.save_pretrained("best_trocr_model")
-        processor.save_pretrained("best_trocr_model")
-        print(f"🔥 New best model saved (CER: {val_cer:.4f})")
+        model.save_pretrained("output/best_trocr_model")
+        processor.save_pretrained("output/best_trocr_model")
+        print(f"New best model saved (CER: {val_cer:.4f})")
     
     # Periodic checkpoints
     if (epoch + 1) % 250 == 0:
-        model.save_pretrained(f"12july-trocr-checkpoint-epoch{epoch+1}")
+        model.save_pretrained(f"output/trocr-checkpoint-epoch{epoch+1}")
