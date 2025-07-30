@@ -8,10 +8,10 @@ from tqdm import tqdm
 from jiwer import wer, cer
 
 # ==== Config ====
-model_dir = "/home/aniketj/soc/test/best_trocr_model"
-test_image_dir = "/home/aniketj/soc/CODE/test"
-test_transcription_dir = "/home/aniketj/soc/CODE/test_transcriptions"
-output_csv_path = "/home/aniketj/soc/test/trocr_predictions_final.csv"
+model_dir = "best_trocr_model"
+test_image_dir = "Working_dataset/test"
+test_transcription_dir = "Working_dataset/test_transcriptions"
+output_csv_path = "output/trocr_predictions_final.csv"
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
