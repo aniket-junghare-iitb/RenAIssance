@@ -32,7 +32,7 @@ image_files = sorted([
 rows = []
 
 # ==== Inference ====
-print("\n🔍 Running inference and building dataframe...\n")
+print("\n Running inference and building dataframe...\n")
 
 for image_file in tqdm(image_files, desc="Processing"):
     image_path = os.path.join(test_image_dir, image_file)
@@ -83,4 +83,4 @@ for image_file in tqdm(image_files, desc="Processing"):
 # ==== Create and Save DataFrame ====
 df = pd.DataFrame(rows)
 df.to_csv(output_csv_path, index=False)
-print(f"\n✅ Saved CSV to: {output_csv_path}")
+print(f"\n Saved CSV to: {output_csv_path}")
