@@ -1,4 +1,4 @@
-# RenAIssance : Deciphering Early Modern Handwritten Texts with AI
+# RenAIssance : End-to-End Handwritten Texts Recognition
 
 This repository contains an end-to-end pipeline for **Handwritten Text Recognition (HTR)** focused on early modern Spanish manuscripts. The project combines self-supervised visual pretraining, fine-tuned optical recognition, multimodal reranking, and score fusion to improve transcription accuracy on degraded, nonstandard historical handwriting.  
 
