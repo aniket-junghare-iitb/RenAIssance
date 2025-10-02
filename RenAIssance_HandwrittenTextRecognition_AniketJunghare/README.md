@@ -106,7 +106,7 @@ dataset_preparation.ipynb
    
 Execute the main script:
 ```bash
-python trocr_finetune.py 
+python train_mim_trocr.py 
 ```
 
 ```bash
@@ -114,7 +114,7 @@ python evaluate.py
 ```
 
 ```bash
-python reranking.py 
+python clip_reranking.py 
 ```
   
 
