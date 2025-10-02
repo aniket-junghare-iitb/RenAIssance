@@ -6,7 +6,7 @@ from transformers import CLIPProcessor, CLIPModel
 import ast
 
 # ==== Configuration ====
-csv_path = "output/trocr_predictions_final.csv"
+csv_path = "output/mim_trocr_predictions.csv"
 image_folder = "Working_dataset/test"
 clip_model_name = "openai/clip-vit-base-patch32"
 alpha = 0.5
@@ -68,3 +68,4 @@ for idx, row in df.iterrows():
         print(f"{i+1}. {pred}")
         print(f"    LogProb: {lp:.2f},  CLIP: {cp:.4f},  Score: {score:.4f}")
     print("-------------------------------------------------------------------------------------------")
+
