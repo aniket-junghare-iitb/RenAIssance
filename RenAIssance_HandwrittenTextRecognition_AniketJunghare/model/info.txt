@@ -1,0 +1,2 @@
+The trained model should be kept in this directory. (if trained)
+The downloaded model should be kept in this directory. (if downloaded)
