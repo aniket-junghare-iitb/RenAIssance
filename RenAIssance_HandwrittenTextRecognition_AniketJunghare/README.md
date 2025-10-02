@@ -82,7 +82,7 @@ mBART is used as a post-correction module to fix transcription-level issues like
 
 ## 🔗 **Download Finetuned Model and Dataset**
 
-- [**Finetuned Model** (`- download`)](https://drive.google.com/file/d/1NS6iFxSZMNH0TrfDbEsZC1pFtrwhyQhU/view?usp=sharing) (After extracting should be kept in 'model' folder)
+- [**Trained Model** (`- download`)](https://drive.google.com/file/d/14zaKe415iDK1hiD_buqf_FqsAmNHFZj0/view?usp=sharing) (After extracting should be kept in 'model' folder)
 - [**Dataset** (`- download`)](https://drive.google.com/file/d/1e5dDeLqlyrrbrDk3vjAGBpPKaDDSvwdg/view?usp=sharing) (After extracting should be kept in 'Dataset' folder)
 
 
