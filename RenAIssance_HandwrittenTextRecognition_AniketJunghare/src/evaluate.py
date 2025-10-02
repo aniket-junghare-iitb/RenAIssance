@@ -8,10 +8,10 @@ from tqdm import tqdm
 from jiwer import wer, cer
 
 # ==== Config ====
-model_dir = "best_trocr_model"
+model_dir = "best_mim_trocr_model"
 test_image_dir = "Working_dataset/test"
 test_transcription_dir = "Working_dataset/test_transcriptions"
-output_csv_path = "output/trocr_predictions_final.csv"
+output_csv_path = "output/mim_trocr_predictions.csv"  
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -83,4 +83,5 @@ for image_file in tqdm(image_files, desc="Processing"):
 # ==== Create and Save DataFrame ====
 df = pd.DataFrame(rows)
 df.to_csv(output_csv_path, index=False)
-print(f"\n Saved CSV to: {output_csv_path}")
+print(f"\nSaved CSV to: {output_csv_path}")
+
