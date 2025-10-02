@@ -1,43 +1,84 @@
-# End to end Handwritten Text Recognition
+# RenAIssance : Deciphering Early Modern Handwritten Texts with AI
 
-The handwritten text recognition project fine-tunes TrOCR to generate multiple handwritten text predictions, then reranks them using CLIP and score fusion. This approach combines visual and textual embeddings in a shared space to improve the accuracy of OCR on historical handwritten text.
+This repository contains an end-to-end pipeline for **Handwritten Text Recognition (HTR)** focused on early modern Spanish manuscripts. The project combines self-supervised visual pretraining, fine-tuned optical recognition, multimodal reranking, and score fusion to improve transcription accuracy on degraded, nonstandard historical handwriting.  
 
-
-
- 
----
-
-## Stage 1: Fine-tuning TrOCR
-
-TrOCR, a Transformer-based OCR model, is fine-tuned on a handwritten text dataset. The model is trained in a supervised manner using pairs of input images and their corresponding transcriptions. During inference, TrOCR generates multiple predictions per image using beam search. This enables the model to output a list of the top-n most probable text hypotheses based on its internal confidence.
-
+[Read the full article on Medium](https://medium.com/@aniketjunghare999/renaissance-deciphering-early-modern-handwritten-texts-with-artificial-intelligence-314804d9be0c)
 
 ---
 
-## Stage 2: Beam Search Decoding
+# Dataset & Preparation
 
-Beam search is used during inference to generate multiple plausible predictions for each image. Unlike greedy decoding, which selects only the most likely word at each step, beam search maintains several candidate sequences at once, balancing between exploration and confidence. Each candidate prediction is associated with a confidence score based on the model's softmax probabilities.
-
-
----
-
-## Stage 3: Reranking with CLIP
-
-CLIP (Contrastive Language-Image Pretraining) maps images and text into a shared embedding space. For each of the 5 predictions from TrOCR's beam search, we compute the similarity between the image and each predicted text using CLIP. This allows us to assess how well each text semantically aligns with the visual content of the input image.
-
+The project uses high-resolution manuscript scans from Spanish archives (15th–18th centuries), covering legal records, royal decrees, and literary texts. The dataset strategy blends **unlabeled images** (for MIM pretraining) with **line-level labeled pairs** (image + transcription) for supervised fine-tuning and evaluation.  
 
 ---
 
-## Stage 4: Score Fusion
+## Stage 1: Preprocessing Historical Manuscripts
 
-To further improve reranking, we fuse the TrOCR model’s confidence scores with CLIP’s similarity scores. This balanced strategy considers both visual grounding and language confidence. The final score for each candidate prediction is calculated using a weighted combination:
+Preprocessing standardizes and cleans scans to make handwriting features more learnable while preserving historical detail. Typical steps:
 
+- **Binarization** : enhance ink/background contrast  
+- **De-skewing** : correct page tilt so lines run horizontally  
+- **Cropping** : remove margins and archival stamps; focus on lines  
+- **Normalization** : resize to fixed model input (e.g., 384×384)  
+- **Augmentation** : simulate historical aging (smudges, fading, tears) to improve robustness  
 
 ---
 
-## Stage 5: mBART Correction
+## Stage 2: Self-Supervised Pretraining : Masked Image Modeling (MIM)
 
-mBART is used as a post-correction module to fix transcription-level issues like spelling errors, grammar inconsistencies, or contextual mistakes. It is fine-tuned on pairs of noisy OCR outputs and their corrected versions. By leveraging language-level patterns, mBART polishes the top prediction without relying on visual cues.
+A Vision Transformer (ViT) encoder is pretrained using MIM to learn robust visual representations from unlabeled manuscript pages:
+
+- Split image into patches (e.g., 16×16)  
+- Randomly mask ~50% of patches, train a lightweight decoder to reconstruct them  
+- Loss: Mean Squared Error (MSE) between predicted and true pixels of masked patches  
+
+MIM helps the encoder capture **ink textures, ligatures, and page artifacts** without requiring extensive manual transcriptions.  
+
+---
+
+## Stage 3: Fine-tuning TrOCR for Handwritten Text Recognition
+
+TrOCR (vision encoder + transformer decoder) is fine-tuned on preprocessed image–transcription pairs:
+
+- **Encoder**: ViT (pretrained with MIM)  
+- **Decoder**: Transformer decoder producing Spanish text tokens  
+- **Objective**: Cross-entropy loss (ignoring padding tokens), checkpointing by Character Error Rate (CER)  
+
+During inference, **beam search** generates multiple hypotheses (e.g., top-5 candidates) instead of a single greedy output.  
+
+---
+
+## Stage 4: CLIP Reranking : Cross-modal Reasoning
+
+CLIP embeds both images and text into a shared semantic space. For each TrOCR beam candidate:
+
+1. Compute cosine similarity between manuscript image embedding and text embedding  
+2. Rerank candidates so visually coherent transcriptions are prioritized  
+
+This acts as a **visual “second opinion”** when TrOCR’s fluency alone leads to incorrect readings.  
+
+---
+
+## Stage 5: Score Fusion : Balancing Model Confidence and Visual Alignment
+
+To combine multiple signals, TrOCR’s confidence (log-probabilities) and CLIP similarity are fused:
+
+- Normalize log-probabilities across candidates  
+- Final score = weighted combination (α tuned on validation, e.g., α ≈ 0.6)  
+
+This balances **language model confidence** with **visual-semantic alignment**, improving robustness to handwriting variability.  
+
+---
+
+# Evaluation
+
+- **Primary metrics**: Character Error Rate (CER) and Word Error Rate (WER), computed against line-level ground truth  
+- **Ablation studies**: effect of MIM pretraining, beam width, CLIP fusion weights, and augmentation strategies  
+
+---
+
+This pipeline demonstrates how **modern AI techniques can unlock early modern Spanish archives**, enabling large-scale access for historians, linguists, and digital humanities researchers.  
+
 
 ---
 ## Project Structure
