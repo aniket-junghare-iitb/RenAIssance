@@ -63,7 +63,7 @@ mBART is used as a post-correction module to fix transcription-level issues like
 
 ##  **Architecture**
 
-![Alt Text](architecture.png)
+![Alt Text](mim_trocr_clip_architecture.png)
 
 ---
 
