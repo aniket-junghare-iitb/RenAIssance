@@ -92,7 +92,7 @@ This pipeline demonstrates how **modern AI techniques can unlock early modern Sp
 ├── Working_dataset/
 ├── output/  # csv file output before reranking               
 └── src
-    ├── trocr_finetune.py
+    ├── train_mim_trocr.py
     ├── evaluate.py
     ├── reranking.py
 ├── model/    # finetuned trocr model (download from the provided drive link)
