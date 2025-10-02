@@ -95,7 +95,7 @@ This pipeline demonstrates how **modern AI techniques can unlock early modern Sp
     ├── train_mim_trocr.py
     ├── evaluate.py
     ├── reranking.py
-├── model/    # finetuned trocr model (download from the provided drive link)
+├── model/    # trained mim_trocr model (download from the provided drive link)
 ├── environment.yml   # to create the environment                   
 
 
