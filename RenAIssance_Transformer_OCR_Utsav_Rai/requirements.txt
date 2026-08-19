@@ -1,20 +1,25 @@
-# Basic Python packages
-numpy==1.26.4
-Pillow==10.2.0
-opencv-python==4.9.0.80
-scikit-image==0.22.0
-deskew==1.5.1
-fitz==0.0.1.dev2
-PyMuPDF==1.24.4
-argparse==1.4.0
-torch==2.2.1
-torchvision==0.17.1
-tqdm==4.66.2
-transformers==4.39.1
-datasets==2.18.0
-matplotlib==3.8.3
-scikit-learn==1.4.2
-pyyaml==6.0.1
-wandb==0.17.1
-python-Levenshtein==0.25.0
-scipy==1.13.0
+# Core dependencies
+streamlit==1.49.1
+PyMuPDF==1.26.4
+Pillow==11.3.0
+opencv-python==4.12.0.88
+numpy==2.2.6
+deskew==1.5.3
+imutils==0.5.4
+scikit-image==0.25.2
+
+# Transformers and related
+transformers==4.55.4
+huggingface-hub==0.34.4
+tokenizers==0.21.4
+safetensors==0.6.2
+tqdm==4.67.1
+regex==2025.7.34
+pyyaml==6.0.2
+
+# For ONNX runtime
+onnx==1.19.0
+onnxruntime==1.22.1
+optimum==1.27.0
+
+# Note: PyTorch CPU versions are installed separately in the Dockerfile

@@ -12,6 +12,9 @@ This project aims to develop a robust Optical Character Recognition (OCR) system
 
 ## Table of Contents
 
+- [Quick Start with Docker](#quick-start-with-docker)
+  - [Running Pre-built Docker Image](#running-pre-built-docker-image)
+  - [Building Docker Image Locally](#building-docker-image-locally)
 - [Overview](#overview)
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -23,6 +26,153 @@ This project aims to develop a robust Optical Character Recognition (OCR) system
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
 - [Links](#links)
+
+## Quick Start with Docker
+
+The easiest way to run the OCR application is using Docker. You can either pull the pre-built image from Docker Hub or build it locally.
+
+### Running Pre-built Docker Image
+
+The Docker image is available on Docker Hub: [utsavrai27/ocr-quantized](https://hub.docker.com/r/utsavrai27/ocr-quantized)
+
+#### Linux
+
+1. **Install Docker**:
+   ```bash
+   # Ubuntu/Debian
+   sudo apt-get update
+   sudo apt-get install docker.io
+   sudo systemctl start docker
+   sudo systemctl enable docker
+   
+   # Add your user to docker group (optional, to run without sudo)
+   sudo usermod -aG docker $USER
+   # Log out and back in for this to take effect
+   ```
+
+2. **Pull the Docker image**:
+   ```bash
+   docker pull utsavrai27/ocr-quantized
+   ```
+
+3. **Run the container**:
+   ```bash
+   docker run -p 8502:8501 utsavrai27/ocr-quantized
+   ```
+
+4. **Access the application**:
+   - Open your browser and navigate to: `http://localhost:8502`
+
+5. **To stop the container**:
+   - Press `Ctrl+C` in the terminal where the container is running
+
+#### macOS
+
+1. **Install Docker Desktop for Mac**:
+   - Download [Docker Desktop for Mac](https://www.docker.com/products/docker-desktop/)
+   - Open the downloaded `.dmg` file and drag Docker to Applications
+   - Launch Docker Desktop from Applications
+   - Wait for Docker to start (whale icon in menu bar will stop animating)
+
+2. **Pull the Docker image**:
+   ```bash
+   docker pull utsavrai27/ocr-quantized
+   ```
+
+3. **Run the container**:
+   ```bash
+   docker run -p 8502:8501 utsavrai27/ocr-quantized
+   ```
+
+4. **Access the application**:
+   - Open your browser and navigate to: `http://localhost:8502`
+
+5. **To stop the container**:
+   - Press `Ctrl+C` in the terminal where the container is running
+   - Or stop the container from Docker Desktop GUI
+
+#### Windows
+
+1. **Install Docker Desktop for Windows**:
+   - Download and install [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/)
+   - Follow the installation wizard
+   - Make sure to enable WSL 2 if prompted (recommended)
+   - Start Docker Desktop after installation (look for the Docker icon in your system tray)
+
+2. **Pull the Docker image**:
+   
+   Open Command Prompt or PowerShell and run:
+   ```powershell
+   docker pull utsavrai27/ocr-quantized
+   ```
+
+3. **Run the container**:
+   ```powershell
+   docker run -p 8502:8501 utsavrai27/ocr-quantized
+   ```
+   
+   This command:
+   - Maps port 8501 inside the container to port 8502 on your machine
+   - Downloads and runs the image if it hasn't been pulled yet
+
+4. **Access the application**:
+   - Open any web browser on your Windows machine
+   - Navigate to: `http://localhost:8502`
+   - You should see the Streamlit OCR application running
+
+5. **To stop the container**:
+   - Press `Ctrl+C` in the terminal where the container is running
+   - Or find and stop the container in Docker Desktop's GUI
+
+### Building Docker Image Locally
+
+If you prefer to build the Docker image yourself:
+
+1. **Download the required model files** (see [Datasets and Models](#datasets-and-models) section):
+   - OCR model files → `models/`
+   - Quantized ONNX model → `quantized_model/`
+   - CRAFT weights → `weights/`
+
+2. **Build the Docker image**:
+   ```bash
+   cd RenAIssance_Transformer_OCR_Utsav_Rai
+   docker build -t renaissance-ocr .
+   ```
+
+3. **Run the container**:
+   ```bash
+   docker run -p 8501:8501 renaissance-ocr
+   ```
+
+4. **Access the application**:
+   - Open your browser and navigate to: `http://localhost:8501`
+
+#### Additional Docker Commands
+
+**Run in detached mode (background)**:
+```bash
+docker run -d -p 8501:8501 --name renaissance-ocr-app renaissance-ocr
+```
+
+**Check container logs**:
+```bash
+docker logs renaissance-ocr-app
+```
+
+**Stop the container**:
+```bash
+docker stop renaissance-ocr-app
+```
+
+**Remove the container**:
+```bash
+docker rm renaissance-ocr-app
+```
+
+**Check health status**:
+```bash
+docker inspect --format='{{.State.Health.Status}}' renaissance-ocr-app
+```
 
 ## Overview
 
@@ -120,8 +270,34 @@ python test.py
 
 ## Datasets and Models
 
-- Download the dataset containing two folders `All_line_segments` and `All_line_texts` and extract it into `data/train/` folder from [Google Drive](https://drive.google.com/drive/folders/1FX6H3IXh-GyeNFEN2SOBkQy4_m_cQ4DX?usp=drive_link).
-- Download the fine-tuned model named as `printed_large` and extract it into the `models/` folder from [Google Drive](https://drive.google.com/drive/folders/1NMngL384GpGohOpwm3yxYaYJ_Oe_ikpv?usp=drive_link). Also extract all three weights for CRAFT under `weights/` folder using [link1](https://drive.google.com/file/d/1Jk4eGD7crsqCCg9C9VjCLkMN3ze8kutZ/view), [link2](https://drive.google.com/file/d/1i2R7UIUqmkUtF0jv_3MXTqmQ_9wuAnLf/view) and [link3](https://drive.google.com/file/d/1XSaFwBkOaFOdtk4Ane3DFyJGPRw6v5bO/view).
+### Required Downloads for Local Development / Docker Build
+
+| Component | Description | Download Link | Destination |
+|-----------|-------------|---------------|-------------|
+| Training Dataset | Line segments and transcriptions | [Google Drive](https://drive.google.com/drive/folders/1FX6H3IXh-GyeNFEN2SOBkQy4_m_cQ4DX?usp=sharing) | `data/train/` |
+| OCR Model | Fine-tuned TrOCR model (`printed_large`) | [Google Drive](https://drive.google.com/drive/folders/1NMngL384GpGohOpwm3yxYaYJ_Oe_ikpv?usp=sharing) | `models/` |
+| Quantized ONNX Model | CPU-optimized quantized model for inference | [Google Drive](https://drive.google.com/drive/folders/1uDek2tO4AxSoSXWApRe5D7OkDQS4pGqI?usp=sharing) | `quantized_model/` |
+| CRAFT Weight 1 | `craft_mlt_25k.pth` | [Google Drive](https://drive.google.com/file/d/1Jk4eGD7crsqCCg9C9VjCLkMN3ze8kutZ/view) | `weights/` |
+| CRAFT Weight 2 | `craft_ic15_20k.pth` | [Google Drive](https://drive.google.com/file/d/1i2R7UIUqmkUtF0jv_3MXTqmQ_9wuAnLf/view) | `weights/` |
+| CRAFT Weight 3 | `craft_refiner_CTW1500.pth` | [Google Drive](https://drive.google.com/file/d/1XSaFwBkOaFOdtk4Ane3DFyJGPRw6v5bO/view) | `weights/` |
+
+### Setup Instructions
+
+1. **Download the training dataset** containing two folders `All_line_segments` and `All_line_texts` and extract it into the `data/train/` folder.
+
+2. **Download the fine-tuned OCR model** named `printed_large` and extract it into the `models/` folder.
+
+3. **Download the quantized ONNX model** and extract it into the `quantized_model/` folder. This contains:
+   - `encoder_model.onnx`
+   - `decoder_model.onnx`
+   - `decoder_with_past_model.onnx`
+   - `generating_config.json`
+   - `config.json`
+
+4. **Download all three CRAFT weights** and place them in the `weights/` folder:
+   - `craft_mlt_25k.pth`
+   - `craft_ic15_20k.pth`
+   - `craft_refiner_CTW1500.pth`
  
 ## Model Performance
 
@@ -133,7 +309,7 @@ python test.py
 BLEU = 0.92
 ## Acknowledgements
 
-This project is supported by the [HumanAI Foundation](https://humanai.foundation/) and Google Summer of Code 2024 and 2025. Detailed documentation and a journey of this project during 2024 can be found in the [blog post 1](https://utsavrai.substack.com/p/a-journey-into-historical-text-recognition) & [blag post 2](https://utsavrai.substack.com/p/decoding-history-advancing-text-recognition). For 2025 refer [2025 midterm blog](https://utsavrai.substack.com/p/efficient-transformer-based-ocr-for?r=3ypuho).
+This project is supported by the [HumanAI Foundation](https://humanai.foundation/) and Google Summer of Code 2024 and 2025. Detailed documentation and a journey of this project during 2024 can be found in the [blog post 1](https://utsavrai.substack.com/p/a-journey-into-historical-text-recognition) & [blag post 2](https://utsavrai.substack.com/p/decoding-history-advancing-text-recognition). For 2025 refer [2025 midterm blog](https://utsavrai.substack.com/p/efficient-transformer-based-ocr-for?r=3ypuho), [2025 Finalterm blog](https://open.substack.com/pub/utsavrai/p/containerised-quantised-transformer?utm_campaign=post-expanded-share&utm_medium=web).
 
 ## License
 
